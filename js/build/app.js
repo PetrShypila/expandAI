@@ -123,7 +123,7 @@ function ParticlePool( poolSize ) {
 	this.offScreenPos = new THREE.Vector3( 9999, 9999, 9999 );
 
 	this.pColor = '#ffffff';
-	this.pSize = 0.6;
+	this.pSize = 1.0;
 
 	for ( var ii = 0; ii < this.poolSize; ii++ ) {
 		this.particles[ ii ] = new Particle( this );
@@ -305,8 +305,8 @@ function NeuralNetwork() {
 	};
 
 	// axon
-	this.axonOpacityMultiplier = 0.5;
-	this.axonColor = '#0099ff';
+	this.axonOpacityMultiplier = 1.0;
+	this.axonColor = '#ffffff';
 	this.axonGeom = new THREE.BufferGeometry();
 	this.axonPositions = [];
 	this.axonIndices = [];
@@ -331,10 +331,10 @@ function NeuralNetwork() {
 	};
 
 	// neuron
-	this.neuronSizeMultiplier = 1.0;
+	this.neuronSizeMultiplier = 1.7;
 	this.spriteTextureNeuron = TEXTURES.electric;
-	this.neuronColor = '#00ffff';
-	this.neuronOpacity = 0.75;
+	this.neuronColor = '#ffffff';
+	this.neuronOpacity = 1.0;
 	this.neuronsGeom = new THREE.Geometry();
 
 	this.neuronUniforms = {
@@ -415,7 +415,7 @@ NeuralNetwork.prototype.initNeurons = function ( inputVertices ) {
 
 	// set neuron attributes value
 	for ( i = 0; i < this.components.neurons.length; i++ ) {
-		this.neuronAttributes.color.value[ i ] = new THREE.Color( '#00ffff' ); // initial neuron color
+		this.neuronAttributes.color.value[ i ] = new THREE.Color( '#ffffff' ); // initial neuron color
 		this.neuronAttributes.size.value[ i ] = THREE.Math.randFloat( 0.75, 3.0 ); // initial neuron size
 	}
 
@@ -711,7 +711,7 @@ var FRAME_COUNT = 0;
 var sceneSettings = {
 
 	pause: false,
-	bgColor: 0x111113,
+	bgColor: 0x000000,
 	enableGridHelper: false,
 	enableAxisHelper: false
 
@@ -723,10 +723,13 @@ scene = new THREE.Scene();
 
 // ---- Camera
 camera = new THREE.PerspectiveCamera( 75, screenRatio, 10, 5000 );
+camera.position.y = 50;
+camera.position.x = 0;
+camera.position.z = 80;
 // camera orbit control
-cameraCtrl = new THREE.OrbitControls( camera, container );
-cameraCtrl.object.position.y = 150;
-cameraCtrl.update();
+//cameraCtrl = new THREE.OrbitControls( camera, container );
+//cameraCtrl.object.position.y = 100;
+//cameraCtrl.update();
 
 // ---- Renderer
 renderer = new THREE.WebGLRenderer( {
@@ -811,7 +814,7 @@ function initGui() {
 	gui_settings.add( neuralNet.particlePool, 'pSize', 0.2, 2 ).name( 'Signal Size' );
 	gui_settings.add( neuralNet.settings, 'signalMinSpeed', 0.0, 8.0, 0.01 ).name( 'Signal Min Speed' );
 	gui_settings.add( neuralNet.settings, 'signalMaxSpeed', 0.0, 8.0, 0.01 ).name( 'Signal Max Speed' );
-	gui_settings.add( neuralNet, 'neuronSizeMultiplier', 0, 2 ).name( 'Neuron Size Mult' );
+	gui_settings.add( neuralNet, 'neuronSizeMultiplier', 0, 5 ).name( 'Neuron Size Mult' );
 	gui_settings.add( neuralNet, 'neuronOpacity', 0, 1.0 ).name( 'Neuron Opacity' );
 	gui_settings.add( neuralNet, 'axonOpacityMultiplier', 0.0, 5.0 ).name( 'Axon Opacity Mult' );
 	gui_settings.addColor( neuralNet.particlePool, 'pColor' ).name( 'Signal Color' );
