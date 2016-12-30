@@ -1,4 +1,14 @@
 {
+  "name": "expandai",
+  "version": "0.1",
+  "description": "expandAI website",
+  "engines": {
+    "node": "6.7.0"
+  },
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "devDependencies": {
     "connect-livereload": "^0.5.2",
     "grunt": "^0.4.5",
