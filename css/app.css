@@ -2,12 +2,18 @@ body {
 	margin: 0px;
 	padding: 0px;
 	overflow: hidden;
+	position: fixed;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
 }
 canvas {
+	top:0;
+	left:0;
+	z-index: -1;
 	display: block;
-	/* fix necessary to remove space at bottom of canvas */
-
-	vertical-align: top;
+  position: absolute;
 }
 #stats {
 	position: absolute;
@@ -24,6 +30,17 @@ canvas {
 a, a:visited {
 	color: #fff;
 	text-decoration: none;
+}
+.dg {
+	display: none;
+}
+.logo {
+	height:100%;
+	color:white;
+	text-align:center;
+	line-height:3;
+	font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size:85px
 }
 /* loading animation */
 

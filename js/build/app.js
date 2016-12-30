@@ -114,7 +114,7 @@ Signal.prototype.travel = function ( deltaTime ) {
 
 function ParticlePool( poolSize ) {
 
-	this.spriteTextureSignal = TEXTURES.electric;
+	this.spriteTextureSignal = TEXTURES.signal;
 
 	this.poolSize = poolSize;
 	this.pGeom = new THREE.Geometry();
@@ -123,7 +123,7 @@ function ParticlePool( poolSize ) {
 	this.offScreenPos = new THREE.Vector3( 9999, 9999, 9999 );
 
 	this.pColor = '#ffffff';
-	this.pSize = 1.0;
+	this.pSize = 2.0;
 
 	for ( var ii = 0; ii < this.poolSize; ii++ ) {
 		this.particles[ ii ] = new Particle( this );
@@ -305,7 +305,7 @@ function NeuralNetwork() {
 	};
 
 	// axon
-	this.axonOpacityMultiplier = 1.0;
+	this.axonOpacityMultiplier = 1.5;
 	this.axonColor = '#ffffff';
 	this.axonGeom = new THREE.BufferGeometry();
 	this.axonPositions = [];
@@ -332,7 +332,7 @@ function NeuralNetwork() {
 
 	// neuron
 	this.neuronSizeMultiplier = 1.7;
-	this.spriteTextureNeuron = TEXTURES.electric;
+	this.spriteTextureNeuron = TEXTURES.neuron;
 	this.neuronColor = '#ffffff';
 	this.neuronOpacity = 1.0;
 	this.neuronsGeom = new THREE.Geometry();
@@ -685,9 +685,15 @@ OBJloader.load( 'models/brain_vertex_low.obj', function ( model ) {
 
 var TEXTURES = {};
 var textureLoader = new THREE.TextureLoader( loadingManager );
-textureLoader.load( 'sprites/electric.png', function ( tex ) {
+textureLoader.load( 'sprites/neuron.png', function ( tex ) {
 
-	TEXTURES.electric = tex;
+	TEXTURES.neuron = tex;
+
+} );
+
+textureLoader.load( 'sprites/signal.png', function ( tex ) {
+
+	TEXTURES.signal = tex;
 
 } );
 
@@ -698,7 +704,7 @@ if ( !Detector.webgl ) {
 	Detector.addGetWebGLMessage();
 }
 
-var container, stats;
+var container;
 var scene, light, camera, cameraCtrl, renderer;
 var WIDTH = window.innerWidth;
 var HEIGHT = window.innerHeight;
@@ -741,10 +747,6 @@ renderer.setPixelRatio( pixelRatio );
 renderer.setClearColor( sceneSettings.bgColor, 1 );
 renderer.autoClear = false;
 container.appendChild( renderer.domElement );
-
-// ---- Stats
-stats = new Stats();
-container.appendChild( stats.domElement );
 
 // ---- grid & axis helper
 var gridHelper = new THREE.GridHelper( 600, 50 );
@@ -801,7 +803,7 @@ function main() {
 function initGui() {
 
 	gui = new dat.GUI();
-	gui.width = 270;
+	gui.width = 0;
 
 	gui_info = gui.addFolder( 'Info' );
 	gui_info.add( neuralNet, 'numNeurons' ).name( 'Neurons' );
@@ -822,13 +824,15 @@ function initGui() {
 	gui_settings.addColor( neuralNet, 'axonColor' ).name( 'Axon Color' );
 	gui_settings.addColor( sceneSettings, 'bgColor' ).name( 'Background' );
 
-	gui_info.open();
-	gui_settings.open();
+	gui_settings.width = 0;
+	//gui_info.open();
+	//gui_settings.open();
 
 	for ( var i = 0; i < gui_settings.__controllers.length; i++ ) {
 		gui_settings.__controllers[ i ].onChange( updateNeuralNetworkSettings );
 	}
 
+	dat.GUI.toggleHide();
 }
 
 function updateNeuralNetworkSettings() {
@@ -869,44 +873,43 @@ function run() {
 	renderer.clear();
 	update();
 	renderer.render( scene, camera );
-	stats.update();
 	FRAME_COUNT ++;
 
 }
 
 // Events --------------------------------------------------------
 
-window.addEventListener( 'keypress', function ( event ) {
+// window.addEventListener( 'keypress', function ( event ) {
+//
+// 	var key = event.keyCode;
+//
+// 	switch ( key ) {
+//
+// 		case 32:/*space bar*/ sceneSettings.pause = !sceneSettings.pause;
+// 			break;
+//
+// 		case 65:/*A*/
+// 		case 97:/*a*/ sceneSettings.enableGridHelper = !sceneSettings.enableGridHelper;
+// 			break;
+//
+// 		case 83 :/*S*/
+// 		case 115:/*s*/ sceneSettings.enableAxisHelper = !sceneSettings.enableAxisHelper;
+// 			break;
+//
+// 	}
+//
+// } );
 
-	var key = event.keyCode;
 
-	switch ( key ) {
-
-		case 32:/*space bar*/ sceneSettings.pause = !sceneSettings.pause;
-			break;
-
-		case 65:/*A*/
-		case 97:/*a*/ sceneSettings.enableGridHelper = !sceneSettings.enableGridHelper;
-			break;
-
-		case 83 :/*S*/
-		case 115:/*s*/ sceneSettings.enableAxisHelper = !sceneSettings.enableAxisHelper;
-			break;
-
-	}
-
-} );
-
-
-$( function () {
-	var timerID;
-	$( window ).resize( function () {
-		clearTimeout( timerID );
-		timerID = setTimeout( function () {
-			onWindowResize();
-		}, 250 );
-	} );
-} );
+// $( function () {
+// 	var timerID;
+// 	$( window ).resize( function () {
+// 		clearTimeout( timerID );
+// 		timerID = setTimeout( function () {
+// 			onWindowResize();
+// 		}, 250 );
+// 	} );
+// } );
 
 
 function onWindowResize() {
