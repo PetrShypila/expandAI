@@ -5,6 +5,10 @@ var static = require('node-static');
 //
 var file = new static.Server('./');
 
+var port_ = (process.env.PORT || 8080);
+
+console.log("Listening on port: " + port_);
+
 require('http').createServer(function (request, response) {
     request.addListener('end', function () {
         //
@@ -12,4 +16,4 @@ require('http').createServer(function (request, response) {
         //
         file.serve(request, response);
     }).resume();
-}).listen(process.env.PORT || 8080);
+}).listen(port_);
