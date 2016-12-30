@@ -1,6 +1,6 @@
 {
   "name": "expandai",
-  "version": "0.1",
+  "version": "0.0.1",
   "description": "expandAI website",
   "engines": {
     "node": "6.7.0"
