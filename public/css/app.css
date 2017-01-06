@@ -1,3 +1,5 @@
+@font-face { font-family: Norwester; src: url('norwester.ttf'); }
+
 /* ---- reset ---- */
 
 body {
@@ -21,4 +23,26 @@ canvas {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
+  /* added */
+  z-index: -1;
+  top: 0;
+  left: 0;
+}
+
+.logo {
+    top: 35%;
+    width: 100%;
+    font-size: 10.0em;
+    position: absolute;
+    text-align: center;
+    font-family: Norwester;
+}
+
+.descr {
+	left: 29%;
+    font-size: 30%;
+    background: white;
+    position: absolute;
+    letter-spacing: 0.0em;
+    font-family: monospace;
 }
