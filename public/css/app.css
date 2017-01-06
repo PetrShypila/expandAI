@@ -39,10 +39,10 @@ canvas {
 }
 
 .descr {
-	left: 29%;
-    font-size: 30%;
+	bottom: 100px;
+    font-size: 26%;
     background: white;
-    position: absolute;
-    letter-spacing: 0.0em;
+    margin-right: 30px;
+    position: relative;
     font-family: monospace;
 }
